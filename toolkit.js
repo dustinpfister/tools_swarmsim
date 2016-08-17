@@ -5,89 +5,121 @@
  */
 
 // Swarm Sim Tools
-var ssTools = {
+var ssTools = (function () {
 
-    // ssTools version
-    version : '1.0.0',
+    // tab elements
+    var tabs = [],
 
-    // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
-    bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
-    bpl : 134 * Math.pow(10, 6), // bugs per larva
+    // to tab helper ( index 0 ==  meat tab, 1 == larva tab, ...)
+    toTab = function (index) {
 
-    // energy tab status
-    m : 19, // swarm warp minutes
-    s : 0, // swarm warp seconds
-    larvaPerC : 422.456 * Math.pow(10, 24), // larva per cone
+        tabs[index].click();
 
-    /*    swarmwarp:
-     *
-     *    return total production per 1000e if swarmwarp
-     *    where bpr is the bug production rate per second
-     *    and m, and s are minutes and seconds.
-     */
-    warp : function () {
+    };
 
-        return this.bpr * (60 * this.m + this.s) / 2;
+    // setup
+    (function () {
 
-    },
+        // get tabs
+        var links = document.getElementsByTagName('a'),
+        i = 0,
+        len = links.length;
+        while (i < len) {
 
-    /*    cloning:
-     *
-     *    return total production per 1000e if cloning
-     *    where bpl is the bug production per larva, and larvaPerC is the
-     *    larva production per clone
-     */
-    clone : function () {
+            if (links[i].className === 'ng-binding') {
 
-        return this.bpl * this.larvaPerC / 12;
+                tabs.push(links[i]);
 
-    },
+            }
 
-    // do i clone or warp?
-    what : function () {
-
-        if (this.clone() > this.warp()) {
-
-            return 'clone';
-
-        } else {
-
-            return 'warp'
+            i += 1;
 
         }
 
     }
+        ());
 
-};
+    // public api
+    return {
 
-/*    swarmwarp:
- *
- *    return total production per 1000e if swarmwarp
- *    where bpr is the bug production rate per second
- *    and m, and s are minutes and seconds.
- */
-//var swarmwarp = function(bpr, m, s){
+        // ssTools version
+        version : '1.1.0',
 
-//    return bpr * (60 * m + s) / 2;
+        // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
+        bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
+        bpl : 134 * Math.pow(10, 6), // bugs per larva
 
-//};
+        // energy tab status
+        m : 19, // swarm warp minutes
+        s : 0, // swarm warp seconds
+        larvaPerC : 422.456 * Math.pow(10, 24), // larva per cone
 
-// example:
-// swarmwarp(872 * Math.pow(10,27),20,8);
+        /*    swarmwarp:
+         *
+         *    return total production per 1000e if swarmwarp
+         *    where bpr is the bug production rate per second
+         *    and m, and s are minutes and seconds.
+         */
+        warp : function () {
+
+            return this.bpr * (60 * this.m + this.s) / 2;
+
+        },
+
+        /*    cloning:
+         *
+         *    return total production per 1000e if cloning
+         *    where bpl is the bug production per larva, and larvaPerC is the
+         *    larva production per clone
+         */
+        clone : function () {
+
+            return this.bpl * this.larvaPerC / 12;
+
+        },
+
+        // do i clone or warp?
+        what : function () {
+
+            if (this.clone() > this.warp()) {
+
+                return 'clone';
+
+            } else {
+
+                return 'warp'
+
+            }
+
+        },
+
+        toTab : function (index) {
+
+            toTab(index);
+
+        },
+
+        // grab values from dom
+        grab : function () {
+
+            //console.log(document.body);
+
+            //    var appElement = document.querySelector('[ng-app=swarmApp]');
+            //appScope = angular.element(appElement).scope();
+
+            // class 'tab-icon-meat'
 
 
-/*    cloning:
- *
- *    return total production per 1000e if cloning
- *    where bpl is the bug production per larva, and larvaPerC is the
- *    larva production per clone
- */
+            //  console.log(document.querySelector('[ng-app=swarmApp]'));
+            //  console.log(document.getElementsByClassName('tab-icon-meat'));
+            //  console.log(document.getElementsByClassName('ng-binding'));
 
-//var cloning = function(bpl, larvaPerC ){
+            // get the unit table
+            //  console.log(document.getElementsByClassName('unit-table'));
 
-//    return bpl * larvaPerC / 12;
+        }
 
-//};
+    };
 
-// example: (67.1 million Neural Cluster per larva, and 63.6 septillion larva per clone)
-// cloning( 67.1 * Math.pow(10,6) , 63.6 * Math.pow(10,24) );
+}
+    ());
