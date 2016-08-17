@@ -15,6 +15,19 @@ var ssTools = (function () {
 
         tabs[index].click();
 
+    },
+
+    updateMeat = function () {
+
+        var units;
+
+        // go to meat tab
+        toTab(0);
+
+        units = document.getElementsByClassName('unit-table')[0];
+
+        console.log(units);
+
     };
 
     // setup
@@ -43,7 +56,7 @@ var ssTools = (function () {
     return {
 
         // ssTools version
-        version : '1.1.0',
+        version : '1.1.1',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -93,9 +106,16 @@ var ssTools = (function () {
 
         },
 
+        meat : function () {
+
+            updateMeat();
+
+        },
+
         toTab : function (index) {
 
             toTab(index);
+            console.log(document.getElementsByClassName('unit-table'));
 
         },
 
