@@ -17,6 +17,24 @@ var ssTools = (function () {
 
     },
 
+    loopUnits = function (forUnit) {
+
+        var units = document.querySelectorAll('.unselectedlist-label,.list-label'),
+        i = 0,
+        len = units.length;
+
+        forUnit = forUnit === undefined ? function (unit) {console.log(unit);}: forUnit;
+
+        while (i < len) {
+
+            forUnit(units[i]);
+
+            i += 1;
+
+        }
+
+    },
+
     updateMeat = function () {
 
         var classNames = 'meat,drone,queen,nest,greaterqueen,hive,hivequeen,empress,prophet,goddess,pantheon,pantheon2,pantheon3,pantheon4'.split(','),
@@ -43,9 +61,9 @@ var ssTools = (function () {
 
             //units[i].children[0].click();
             //console.log(units[i]);
-			
-			unit = document.getElementsByClassName('label-' + classNames[i])[0];
-			unit.click();
+
+            unit = document.getElementsByClassName('label-' + classNames[i])[0];
+            unit.click();
 
             console.log('.label-' + classNames[i]);
             //console.log(document.getElementsByClassName('label-' + classNames[i]));
@@ -84,7 +102,7 @@ var ssTools = (function () {
     return {
 
         // ssTools version
-        version : '1.1.3',
+        version : '1.1.4',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -164,6 +182,7 @@ var ssTools = (function () {
 
             // get the unit table
             //  console.log(document.getElementsByClassName('unit-table'));
+            //  console.log(document.getElementsByTagName('tbody'));
 
         }
 
