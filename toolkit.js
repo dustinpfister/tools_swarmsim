@@ -10,7 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.15',
+        version : '1.1.16',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -49,20 +49,17 @@ var ssTools = (function () {
         },
 
         // do i clone or warp?
-        what : function () {
+        what : function (mui) {
 
-            /*
-            if (this.clone() > this.warp()) {
+            if (this.clone(mui) > this.warp(mui)) {
 
-            return 'clone';
+                return 'clone';
 
             } else {
 
-            return 'warp'
+                return 'warp'
 
             }
-
-             */
 
         },
 
@@ -147,14 +144,15 @@ var ssTools = (function () {
 
                 function () {
 
-                pubAPI.meatUnits.forEach(function (unit, index) {
+                self.meatUnits.forEach(function (unit, index) {
 
                     unit.clone = self.clone(index);
                     unit.warp = self.warp(index);
+                    unit.what = self.what(index);
 
                 });
 
-                console.log(pubAPI.meatUnits);
+                console.log(self.meatUnits);
 
             });
 
