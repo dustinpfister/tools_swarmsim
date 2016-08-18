@@ -10,7 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.12',
+        version : '1.1.13',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -22,7 +22,7 @@ var ssTools = (function () {
         // energy tab status
         m : 19, // swarm warp minutes
         s : 25, // swarm warp seconds
-        larvaPerC : 422.456 * Math.pow(10, 24), // larva per cone
+        larvaPerC : 435.019 * Math.pow(10, 24), // larva per cone
 
         /*    swarmwarp:
          *
@@ -42,9 +42,9 @@ var ssTools = (function () {
          *    where bpl is the bug production per larva, and larvaPerC is the
          *    larva production per clone
          */
-        clone : function () {
+        clone : function (mui) {
 
-            //return this.bpl * this.larvaPerC / 12;
+            return this.meatUnits[mui].bpl * this.larvaPerC / 12;
 
         },
 
