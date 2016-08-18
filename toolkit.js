@@ -10,7 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.7',
+        version : '1.1.8',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -62,7 +62,25 @@ var ssTools = (function () {
 
         meat : function () {
 
-            updateMeat();
+            // go to meat tab
+            toTab(0);
+
+            loopUnits.loop(function (unit) {
+
+                unit.click();
+
+                var pro = document.querySelector('div.ng-binding.ng-scope'),
+				text;
+
+                if (pro) {
+
+				    text = pro.children[0].innerText;
+                    
+					console.log(text.split(' ')[0]);
+
+                }
+
+            });
 
         },
 
@@ -200,26 +218,7 @@ var ssTools = (function () {
     }
         ()),
 
-    updateMeat = function () {
-
-        // go to meat tab
-        toTab(0);
-
-        loopUnits.loop(function (unit) {
-
-            unit.click();
-
-            var pro = document.querySelector('div.ng-binding.ng-scope');
-
-            if (pro) {
-
-                console.log(pro.innerText);
-
-            }
-
-        });
-
-    };
+    updateMeat = function () {};
 
     // setup
     (function () {
