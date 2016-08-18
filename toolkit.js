@@ -10,11 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.17',
-
-        // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
-        //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
-        //bpl : 134 * Math.pow(10, 6), // bugs per larva
+        version : '1.1.18',
 
         // bug production rate, bugs per larva, ect for all meat units.
         meatUnits : [],
@@ -139,6 +135,16 @@ var ssTools = (function () {
                 text = text.substr(8).split(' ')[0].split('E');
 
                 console.log(text);
+
+                if (text.length === 1) {
+
+                    meatUnit.owned = Number(text[0] === 'no' ? 0 : text[0]);
+
+                } else {
+
+                    meatUnit.owned = text[0] * Math.pow(10, text[1]);
+
+                }
 
                 self.meatUnits.push(meatUnit);
 
