@@ -10,7 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.6',
+        version : '1.1.7',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -208,7 +208,14 @@ var ssTools = (function () {
         loopUnits.loop(function (unit) {
 
             unit.click();
-            console.log(unit.className)
+
+            var pro = document.querySelector('div.ng-binding.ng-scope');
+
+            if (pro) {
+
+                console.log(pro.innerText);
+
+            }
 
         });
 
