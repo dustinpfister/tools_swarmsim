@@ -10,11 +10,14 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.9',
+        version : '1.1.10',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
-        bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
-        bpl : 134 * Math.pow(10, 6), // bugs per larva
+        //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
+        //bpl : 134 * Math.pow(10, 6), // bugs per larva
+
+        // bpr for all meat units
+        meatUnits : [],
 
         // energy tab status
         m : 19, // swarm warp minutes
@@ -29,7 +32,7 @@ var ssTools = (function () {
          */
         warp : function () {
 
-            return this.bpr * (60 * this.m + this.s) / 2;
+            //return this.bpr * (60 * this.m + this.s) / 2;
 
         },
 
@@ -41,22 +44,25 @@ var ssTools = (function () {
          */
         clone : function () {
 
-            return this.bpl * this.larvaPerC / 12;
+            //return this.bpl * this.larvaPerC / 12;
 
         },
 
         // do i clone or warp?
         what : function () {
 
+            /*
             if (this.clone() > this.warp()) {
 
-                return 'clone';
+            return 'clone';
 
             } else {
 
-                return 'warp'
+            return 'warp'
 
             }
+
+             */
 
         },
 
@@ -65,13 +71,24 @@ var ssTools = (function () {
             // go to meat tab
             toTab(0);
 
+            this.meatUnits = [],
+            self = this;
+
             loopUnits.loop(function (unit) {
 
                 unit.click();
 
                 var pro = document.querySelector('div.ng-binding.ng-scope'),
                 text,
-                num;
+                num,
+
+                meatUnit = {
+
+                    label : unit.innerText,
+                    bpr : 0,
+                    bpl : 1
+
+                };
 
                 if (pro) {
 
@@ -79,21 +96,23 @@ var ssTools = (function () {
 
                     num = text.split(' ')[0].split('E');
 
-                    //console.log(num);
+                    console.log(unit.innerText);
 
                     if (num.length === 1) {
 
-                        console.log(Number(num[0].replace(/,/g, '')));
+                        meatUnit.bpr = Number(num[0].replace(/,/g, ''));
 
                     } else {
 
-                        //num = num.split('E')
-
-                        console.log(num[0] * Math.pow(10, num[1]));
+                        meatUnit.bpr = num[0] * Math.pow(10, num[1]);
 
                     }
 
+                    self.meatUnits.push(meatUnit);
+
                 }
+
+                console.log(meatUnit.bpr);
 
             });
 
@@ -201,12 +220,19 @@ var ssTools = (function () {
 
         };
 
-        api.loop = function (forUnit, time) {
+        api.loop = function (forUnit, done, time) {
 
             forUnit = forUnit === undefined ? function (unit) {
                 console.log(unit)
             }
              : forUnit;
+
+            done = done === undefined ? function () {
+
+                console.log('loop done');
+
+            }
+             : done;
 
             time = time === undefined ? 1000 : time;
 
@@ -217,6 +243,10 @@ var ssTools = (function () {
                 if (api.step(forUnit)) {
 
                     setTimeout(loop, time);
+
+                } else {
+
+                    done();
 
                 }
 
