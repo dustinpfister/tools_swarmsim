@@ -17,62 +17,111 @@ var ssTools = (function () {
 
     },
 
-    loopUnits = function (forUnit) {
+    loopUnits = (function () {
 
-        var units = document.querySelectorAll('.unselectedlist-label,.list-label'),
-        i = 0,
-        len = units.length;
+        var i,
+        len,
+        units = [],
 
-        forUnit = forUnit === undefined ? function (unit) {console.log(unit);}: forUnit;
+        api = function (forUnit) {
 
-        while (i < len) {
+            api.reset();
 
-            forUnit(units[i]);
+            forUnit = forUnit === undefined ? function (unit) {
+                console.log(unit)
+            }
+             : forUnit;
+            while (i < len) {
 
-            i += 1;
+                forUnit(units[i]);
+
+                i += 1;
+
+            }
+
+        };
+
+        api.getUnits = function () {
+
+            units = document.querySelectorAll('.unselectedlist-label,.list-label');
+
+        };
+
+        api.reset = function () {
+
+            api.getUnits();
+
+            i = 0;
+
+            len = units.length;
+
+        };
+
+        // if i is less then i call given forUnit step i and return true, else return false
+        api.step = function (forUnit) {
+
+            forUnit = forUnit === undefined ? function (unit) {
+                console.log(unit)
+            }
+             : forUnit;
+
+            if (i < len) {
+
+                forUnit(units[i]);
+
+                i += 1;
+
+                return true;
+
+            }
+
+            return false;
+
+        };
+
+        api.loop = function (forUnit, time) {
+
+            forUnit = forUnit === undefined ? function (unit) {
+                console.log(unit)
+            }
+             : forUnit;
+
+            time = time === undefined ? 1000 : time;
+
+            api.reset();
+
+            var loop = function () {
+
+                if (api.step(forUnit)) {
+
+                    setTimeout(loop, time);
+
+                }
+
+            };
+
+            loop();
 
         }
 
-    },
+        api.reset();
+
+        return api;
+
+    }
+        ()),
 
     updateMeat = function () {
-
-        var classNames = 'meat,drone,queen,nest,greaterqueen,hive,hivequeen,empress,prophet,goddess,pantheon,pantheon2,pantheon3,pantheon4'.split(','),
-
-        unit,
-        i,
-        len;
 
         // go to meat tab
         toTab(0);
 
-        len = classNames.length;
-        i = len;
+        loopUnits.loop(function (unit) {
 
-        var loop = function () {
-
-            if (i > 1) {
-
-                setTimeout(loop, 1000);
-
-            }
-
-            i -= 1;
-
-            //units[i].children[0].click();
-            //console.log(units[i]);
-
-            unit = document.getElementsByClassName('label-' + classNames[i])[0];
             unit.click();
+            console.log(unit.className)
 
-            console.log('.label-' + classNames[i]);
-            //console.log(document.getElementsByClassName('label-' + classNames[i]));
-
-            //console.log(document.getElementsByClassName('.lable-'+classNames[i])[0]);
-
-        };
-
-        loop();
+        });
 
     };
 
@@ -102,7 +151,7 @@ var ssTools = (function () {
     return {
 
         // ssTools version
-        version : '1.1.4',
+        version : '1.1.5',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
