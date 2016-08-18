@@ -10,7 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.13',
+        version : '1.1.14',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -90,13 +90,13 @@ var ssTools = (function () {
 
                 };
 
+                console.log(unit.innerText);
+
                 if (pro) {
 
                     text = pro.children[0].innerText;
 
                     num = text.split(' ')[0].split('E');
-
-                    console.log(unit.innerText);
 
                     if (num.length === 1) {
 
@@ -108,11 +108,40 @@ var ssTools = (function () {
 
                     }
 
-                    self.meatUnits.push(meatUnit);
+                }
+
+                text = document.querySelector('form.form-inline');
+
+                if (text) {
+                    text = text.children[2].innerText;
+
+                    console.log('bpl:')
+
+                    if (text.indexOf('twins') != -1) {
+
+                        text = text.substr(2, text.length).split(' ')[0];
+
+                        text = text.split('E');
+
+                        if (text.length === 1) {
+
+                            meatUnit.bpl = Number(text[0]);
+
+                        } else {
+
+                            meatUnit.bpl = text[0] * Math.pow(10, text[1]);
+
+                        }
+
+                    } else {
+
+                        meatUnit.bpl = 1;
+
+                    }
 
                 }
 
-                console.log(meatUnit.bpr);
+                self.meatUnits.push(meatUnit);
 
             },
 
