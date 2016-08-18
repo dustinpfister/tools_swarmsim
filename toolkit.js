@@ -10,7 +10,7 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.10',
+        version : '1.1.11',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
@@ -113,6 +113,12 @@ var ssTools = (function () {
                 }
 
                 console.log(meatUnit.bpr);
+
+            },
+
+                function () {
+
+                console.log(self.meatUnits);
 
             });
 
