@@ -10,13 +10,13 @@ var ssTools = (function () {
     var pubAPI = {
 
         // ssTools version
-        version : '1.1.16',
+        version : '1.1.17',
 
         // current status of production of bug of interest (drones, queens, ... , Neural Clusters, ect)
         //bpr : 22.5579 * Math.pow(10, 30), // bug production rate of bug of interest
         //bpl : 134 * Math.pow(10, 6), // bugs per larva
 
-        // bpr for all meat units
+        // bug production rate, bugs per larva, ect for all meat units.
         meatUnits : [],
 
         // energy tab status
@@ -63,6 +63,7 @@ var ssTools = (function () {
 
         },
 
+        // update meat units array
         meat : function () {
 
             // go to meat tab
@@ -83,12 +84,12 @@ var ssTools = (function () {
 
                     label : unit.innerText,
                     bpr : 0,
-                    bpl : 1
+                    bpl : 1,
+                    owned : 0
 
                 };
 
-                console.log(unit.innerText);
-
+                // find Bug Production Rate
                 if (pro) {
 
                     text = pro.children[0].innerText;
@@ -107,12 +108,11 @@ var ssTools = (function () {
 
                 }
 
+                // find Bugs Per Larva
                 text = document.querySelector('form.form-inline');
 
                 if (text) {
                     text = text.children[2].innerText;
-
-                    console.log('bpl:')
 
                     if (text.indexOf('twins') != -1) {
 
@@ -130,13 +130,15 @@ var ssTools = (function () {
 
                         }
 
-                    } else {
-
-                        meatUnit.bpl = 1;
-
                     }
 
                 }
+
+                // get number owned
+                text = document.querySelectorAll('[cur=\"cur.unit\"]')[0].children[2].innerText;
+                text = text.substr(8).split(' ')[0].split('E');
+
+                console.log(text);
 
                 self.meatUnits.push(meatUnit);
 
